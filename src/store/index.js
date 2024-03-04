@@ -1,5 +1,11 @@
 import { createPinia } from "pinia";
+import { useLoginStore } from "./Login";
 
 const pinia = createPinia();
 
-export default pinia;
+function registerPinia(app) {
+  app.use(pinia);
+  const loginStore = useLoginStore();
+  loginStore.loadCache();
+}
+export default registerPinia;

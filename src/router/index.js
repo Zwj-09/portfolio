@@ -3,30 +3,33 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 const routes = [
+  { path: "/", redirect: "/main" },
   {
-    path: "/",
-    name: "首页",
+    path: "/main",
+    name: "Main",
     meta: {
       name: "首页"
     },
-    component: () => import("@/views/main.vue")
+    component: () => import("@/views/Main/index.vue")
+  },
+  {
+    path: "/login",
+    name: "Login",
+    meta: {
+      name: "登录"
+    },
+    component: () => import("@/views/Login/index.vue")
+  },
+  {
+    path: "/:pathMatch(.*)",
+    name: "NotFound",
+    meta: {
+      name: "404"
+    },
+    component: () => import("@/views/NotFound/index.vue")
   }
 ];
 
-// const pages = import.meta.glob("@/views/**/page.js", {
-//   eager: true,
-//   import: "default"
-// });
-
-// const routes = Object.entries(pages).map(([path, config]) => {
-//   console.log("sss", path, config);
-//   return {
-//     // path: "/",
-//     //     name: "首页",
-//     //     component: () => import("@/views/Home/index.vue")
-//     meta: config
-//   };
-// });
 const router = createRouter({
   routes,
   history: createWebHistory()
