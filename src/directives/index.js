@@ -1,11 +1,13 @@
-import { permission } from "./permission";
-import { loadLazy } from "./lazy";
-import { sizeOb } from "./sizeOb";
+const modules = import.meta.glob("../directives/*.js", {
+  eager: true
+});
 
-const directiveMap = [permission, loadLazy, sizeOb];
+const formatePath = (path) => {
+  return path && path.split("./")[1].split(".")[0];
+};
 
 export const registerDirective = (app) => {
-  for (const directive of directiveMap) {
-    directive(app);
+  for (const path in modules) {
+    app.directive(formatePath(path), modules[path][formatePath(path)]);
   }
 };
