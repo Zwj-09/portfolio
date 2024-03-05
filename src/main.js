@@ -11,6 +11,8 @@ import { myPlugin } from "@/plugins/myPlugin";
 const app = createApp(App);
 registerDirective(app);
 
+console.log("aaa");
+
 app
   .use(myPlugin, {
     greetings: {

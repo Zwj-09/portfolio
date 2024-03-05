@@ -2,14 +2,14 @@ const localRoutes = [];
 const routes = [];
 
 export const mapMenuToRoutes = (menus) => {
-  const files = import.meta.glob("../router/Main/**/*.js", {
-    eager: true,
-    import: "default"
+  const files = import.meta.glob("../router/Main/*.js", {
+    eager: true
+    // import: "default"
   });
 
   for (const key in files) {
-    const module = files[key];
-    localRoutes.push(module);
+    const module = files[key].default;
+    localRoutes.push(...module);
   }
 
   mapMenus(menus);

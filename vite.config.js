@@ -21,5 +21,15 @@ export default defineConfig({
       "@": resolve(__dirname, "src")
     },
     extensions: [".js", ".vue"]
+  },
+
+  build: {
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
   }
 });
