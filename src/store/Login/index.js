@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
 import { mapMenuToRoutes } from "@/utils/mapMenuToRoutes";
-import { getStorage } from "@/utils/storage";
+import { getStorage, setStorage } from "@/utils/storage";
 
 // export const useHomeStore = defineStore("home", {
 //   state: () => ({
@@ -45,6 +45,9 @@ export const useLoginStore = defineStore("login", () => {
 
   const handleLogin = () => {
     console.log("登录成功");
+
+    setStorage("TOKEN", "token");
+    setStorage("MENUS", menus.value);
 
     // 动态添加路由
     const routes = mapMenuToRoutes(menus.value);

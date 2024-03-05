@@ -4,7 +4,7 @@ import "normalize.css";
 import "@/assets/css/index.less";
 import router from "@/router";
 import { registerDirective } from "@/directives";
-import pinia from "@/store/index";
+import pinia from "@/store";
 
 import { myPlugin } from "@/plugins/myPlugin";
 

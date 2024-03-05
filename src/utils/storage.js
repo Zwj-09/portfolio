@@ -4,8 +4,10 @@ const storageEnum = {
 };
 
 export const getStorage = (key, storage = "localStorage") => {
-  const values = checkStorageType(storage).getItem(key);
-  return values && values;
+  const value = JSON.parse(checkStorageType(storage).getItem(key));
+  if (value) {
+    return value;
+  }
 };
 export const setStorage = (key, value, storage = "localStorage") => {
   checkStorageType(storage).setItem(key, JSON.stringify(value));
