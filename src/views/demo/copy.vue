@@ -13,11 +13,10 @@ const info = {
   set: new Set(["abc", "abd", "abe"]),
   run: () => {
     console.log("run");
-  }
-  //   a: () => {
-  //     console.log("a");
-  //   },
-  //   [Symbol("b")]: "b"
+  },
+  key: Symbol("abc"),
+  [Symbol("s1")]: "111",
+  [Symbol("s2")]: "222"
 };
 
 // info.obj = info; // 循环引用(JSON深拷贝会报错)
@@ -50,7 +49,12 @@ function isObject(value) {
 }
 
 // 自定义深拷贝
-function cloneData(obj, isDeep = true) {
+function cloneData(obj, isDeep = true, map = new WeakMap()) {
+  // 如果是Symbol 直接返回
+  if (typeof obj === "symbol") {
+    return Symbol(obj.description);
+  }
+
   // 如果是原始类型 直接返回
   if (!isObject(obj)) {
     return obj;
@@ -60,19 +64,35 @@ function cloneData(obj, isDeep = true) {
   if (obj instanceof Set) {
     const newSet = new Set();
     for (const item of obj) {
-      newSet.add(cloneData(item));
+      newSet.add(cloneData(item, isDeep, map));
     }
     return newSet;
   }
 
-  // 如果是对象创建空对象 如果是数组创建空数组
-  const newObj = Array.isArray(obj) ? [] : {};
-
-  for (const key in obj) {
-    // 原始值 直接赋值 对象需要递归处理
-    newObj[key] = isDeep ? cloneData(obj[key]) : obj[key];
+  // 函数类型
+  if (typeof obj === "function") {
+    return obj;
   }
 
+  if (map.has(obj)) {
+    return map.get(obj);
+  }
+
+  // 如果是对象创建空对象 如果是数组创建空数组
+  const newObj = Array.isArray(obj) ? [] : {};
+  map.set(obj, newObj);
+  for (const key in obj) {
+    // 原始值 直接赋值 对象需要递归处理
+    newObj[Symbol(key.description)] = isDeep
+      ? cloneData(obj[key], isDeep, map)
+      : obj[key];
+  }
+
+  // 遍历Symbol
+  const symbolKeys = Object.getOwnPropertySymbols(obj);
+  for (const key of symbolKeys) {
+    newObj[key] = isDeep ? cloneData(obj[key], isDeep, map) : obj[key];
+  }
   return newObj;
 }
 
@@ -85,9 +105,10 @@ const books = [
 const newBooks = cloneData(books, true);
 console.log("newBooks", newBooks);
 
+info.self = info;
 const newInfo = cloneData(info, true);
 console.log("info", info);
-console.log("newInfo", newInfo);
+console.log("newInfo", newInfo.key === info.key);
 // ============================================================
 </script>
 
