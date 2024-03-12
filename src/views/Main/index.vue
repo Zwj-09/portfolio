@@ -1,5 +1,5 @@
 <script setup>
-import copyComp from "@/views/demo/copy.vue";
+// import copyComp from "@/views/demo/copy.vue";
 
 // import pic1 from "@/assets/imgs/1.png";
 // import pic2 from "@/assets/imgs/2.png";
@@ -67,7 +67,7 @@ import copyComp from "@/views/demo/copy.vue";
 <template>
   <aside>侧边栏</aside>
   <main>
-    <!-- <header>
+    <header>
       <router-link to="/home">Home</router-link>
       <router-link to="/me">Me</router-link>
       <router-link to="/info">Info</router-link>
@@ -75,9 +75,9 @@ import copyComp from "@/views/demo/copy.vue";
     </header>
     <div class="content">
       <router-view></router-view>
-    </div> -->
+    </div>
 
-    <copy-comp />
+    <!-- <copy-comp /> -->
 
     <!-- <div class="picture">
       <img :src="dataURLS ? dataURLS : pic1" alt="" />
