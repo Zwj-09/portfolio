@@ -9,13 +9,15 @@ export const mapMenuToRoutes = (menus) => {
 
   for (const key in files) {
     const module = files[key].default;
-    localRoutes.push(...module);
+    if (module) localRoutes.push(...module);
   }
 
   mapMenus(menus);
 
   return routes;
 };
+
+export let firstMenu = null;
 
 const mapMenus = (menus) => {
   for (const menu of menus) {
@@ -25,6 +27,10 @@ const mapMenus = (menus) => {
       const route = localRoutes.find((item) => item.path === menu.path);
       if (route) {
         routes.push(route);
+      }
+
+      if (!firstMenu && route) {
+        firstMenu = menu;
       }
     }
   }

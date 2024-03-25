@@ -6,17 +6,11 @@ import router from "@/router";
 import { registerDirective } from "@/directives";
 import pinia from "@/store";
 
-import { myPlugin } from "@/plugins/myPlugin";
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+const vuetify = createVuetify({});
 
 const app = createApp(App);
 registerDirective(app);
 
-app
-  .use(myPlugin, {
-    greetings: {
-      hello: "Bonjour!"
-    }
-  })
-  .use(pinia)
-  .use(router)
-  .mount("#app");
+app.use(pinia).use(router).use(vuetify).mount("#app");

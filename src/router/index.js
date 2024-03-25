@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import { firstMenu } from "@/utils/mapMenuToRoutes";
+import { getStorage } from "@/utils/storage";
+import { TOKENKEY } from "@/config/key";
 
 const routes = [
   { path: "/", redirect: "/main" },
@@ -38,7 +41,18 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   NProgress.start();
   document.title = to.meta.name;
-  return true;
+
+  const TOKEN = getStorage(TOKENKEY);
+
+  if (to.path !== "/login" && !TOKEN) {
+    return "/login";
+  }
+  if (to.path === "/login" && TOKEN) {
+    return "/main";
+  }
+  if (to.path === "/main" && firstMenu) {
+    return firstMenu?.path;
+  }
 });
 
 router.afterEach(() => {

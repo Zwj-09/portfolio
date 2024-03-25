@@ -1,53 +1,34 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
-import { mapMenuToRoutes } from "@/utils/mapMenuToRoutes";
+import { firstMenu, mapMenuToRoutes } from "@/utils/mapMenuToRoutes";
 import { getStorage, setStorage } from "@/utils/storage";
-
-// export const useHomeStore = defineStore("home", {
-//   state: () => ({
-//     num: 100
-//   }),
-
-//   getters: {
-//     getNum: (state) => {
-//       return state.num;
-//     }
-//   },
-
-//   actions: {
-//     setNumber() {
-//       this.num = 1000;
-//     }
-//   }
-// });
+import { MENUKEY, TOKENKEY } from "@/config/key";
 
 export const useLoginStore = defineStore("login", () => {
   const token = ref("");
   const menus = ref([
     {
       path: "/main",
-      name: "Main",
+      name: "首页",
       children: [{ path: "/home", name: "Home" }]
     },
     {
-      path: "/main",
-      name: "Main",
+      path: "/system",
+      name: "系统",
       children: [
-        { path: "/info", name: "Info" },
         {
           path: "/me",
           name: "Me"
-        }
+        },
+        { path: "/info", name: "Info" }
       ]
     }
   ]);
 
   const handleLogin = () => {
-    console.log("登录成功");
-
-    setStorage("TOKEN", "token");
-    setStorage("MENUS", menus.value);
+    setStorage(TOKENKEY, "token");
+    setStorage(MENUKEY, menus.value);
 
     // 动态添加路由
     const routes = mapMenuToRoutes(menus.value);
@@ -55,13 +36,16 @@ export const useLoginStore = defineStore("login", () => {
     routes.forEach((route) => {
       router.addRoute("Main", route);
     });
-
-    router.push("/main");
+    if (firstMenu?.path) {
+      router.push(firstMenu?.path);
+    } else {
+      router.push("/main");
+    }
   };
 
   const loadCache = () => {
-    const TOKEN = getStorage("TOKEN");
-    const MENUS = getStorage("MENUS");
+    const TOKEN = getStorage(TOKENKEY);
+    const MENUS = getStorage(MENUKEY);
 
     if (TOKEN && MENUS) {
       token.value = TOKEN;
