@@ -22,6 +22,7 @@ const asideMenu = computed(() => props.menus);
       </template>
       <menu-item :menus="menu.children"></menu-item>
     </v-list-group>
+
     <v-list-item v-else :to="menu.path" :title="menu.name"></v-list-item>
   </template>
 </template>
