@@ -1,0 +1,15 @@
+html[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f0f0f0;
+
+  --primary-btn-text:#121212;
+  --primary-btn-bg:#fff;
+}
+
+:root {
+  --bg-color: #fff;
+  --text-color: #121212;
+  
+  --primary-btn-text:#fff;
+  --primary-btn-bg:#121212;
+}

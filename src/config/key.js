@@ -1,2 +1,3 @@
-export const TOKENKEY = "token";
-export const MENUKEY = "menu";
+export const TOKENKEY = "TOKEN";
+export const MENUKEY = "MENU";
+export const THEMEKEY = "THEME";

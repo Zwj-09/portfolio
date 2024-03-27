@@ -7,8 +7,17 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        "theme-bgc": "var(--bg-color)",
+        "theme-text": "var(--text-color)",
+        "primary-btn-bg": "var(--primary-btn-bg)",
+        "primary-btn-text": "var(--primary-btn-text)"
+      },
       height: {
-        "75px": "75px"
+        "header-height": "var(--header-height)",
+        "footer-height": "var(--footer-height)",
+        "total-height":
+          "calc(100% - var(--header-height) - var(--footer-height))"
       }
     }
   },
