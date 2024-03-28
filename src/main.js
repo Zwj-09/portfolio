@@ -5,10 +5,7 @@ import "@/assets/css/index.less";
 import router from "@/router";
 import { registerDirective } from "@/directives";
 import pinia from "@/store";
-
-import "vuetify/styles";
-import { createVuetify } from "vuetify";
-const vuetify = createVuetify({});
+import { vuetify } from "@/plugins/vuetify";
 
 const app = createApp(App);
 registerDirective(app);

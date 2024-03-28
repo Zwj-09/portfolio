@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import router from "@/router";
 import { firstMenu, mapMenuToRoutes } from "@/utils/mapMenuToRoutes";
 import { getStorage, setStorage } from "@/utils/storage";
-import { MENUKEY, TOKENKEY } from "@/config/key";
+import { EXPIRETIME, MENUKEY, TOKENKEY } from "@/config/key";
 
 export const useLoginStore = defineStore("login", () => {
   const token = ref("");
@@ -29,6 +29,9 @@ export const useLoginStore = defineStore("login", () => {
   const handleLogin = () => {
     setStorage(TOKENKEY, "token");
     setStorage(MENUKEY, menus.value);
+
+    const EXPIRE_TIME = Date.now() + 1000 * 60 * 60 * 24;
+    setStorage(EXPIRETIME, EXPIRE_TIME);
 
     // 动态添加路由
     const routes = mapMenuToRoutes(menus.value);

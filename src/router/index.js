@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { firstMenu } from "@/utils/mapMenuToRoutes";
-import { getStorage } from "@/utils/storage";
-import { TOKENKEY } from "@/config/key";
+import { clearStorage, getStorage } from "@/utils/storage";
+import { EXPIRETIME, TOKENKEY } from "@/config/key";
 
 const routes = [
   { path: "/", redirect: "/main" },
@@ -43,10 +43,18 @@ router.beforeEach(async (to, from) => {
   document.title = to.meta.name;
 
   const TOKEN = getStorage(TOKENKEY);
+  const EXPIRATION_TIME = getStorage(EXPIRETIME);
 
+  // 登录时间过期
   if (to.path !== "/login" && !TOKEN) {
     return "/login";
   }
+
+  if (EXPIRATION_TIME && EXPIRATION_TIME < Date.now()) {
+    clearStorage();
+    return "/login";
+  }
+
   if (to.path === "/login" && TOKEN) {
     return "/main";
   }
