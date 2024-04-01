@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <v-btn>啊u基层干部撒谎</v-btn>
+  <v-btn>首页</v-btn>
 </template>
 
 <style lang="less" scoped></style>
