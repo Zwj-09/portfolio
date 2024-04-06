@@ -16,6 +16,7 @@
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
+    "spark-md5": "^3.0.2",
     "terser": "^5.28.1",
     "unplugin-auto-import": "^0.17.1",
     "vite-plugin-vuetify": "^2.0.3",

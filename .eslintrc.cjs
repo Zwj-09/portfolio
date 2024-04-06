@@ -27,6 +27,7 @@ module.exports = {
   plugins: ["vue"],
   rules: {
     "vue/multi-word-component-names": "off",
-    "array-callback-return": "off"
+    "array-callback-return": "off",
+    "no-new": "off"
   }
 };
